@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Checkpoints : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Animator animator;
+
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        animator.SetBool("Checking", true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
