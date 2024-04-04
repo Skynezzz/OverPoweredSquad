@@ -6606,12 +6606,15 @@ MonoBehaviour:
   animator: {fileID: 1068653806}
   spriteRenderer: {fileID: 1068653803}
   acceleration: 20
-  maxSpeed: 15
-  airControl: 0.5
+  maxSpeedX: 15
+  maxSpeedY: 20
+  wallRideSpeedY: 0
+  airControl: 0.35
   jumpStrengh: 7
   wallJumpStrengh: 10
   doubleJump: 0
   isGrounded: 0
+  isWalled: 0
   isWalledLeft: 0
   isWalledRight: 0
 --- !u!95 &1068653806
