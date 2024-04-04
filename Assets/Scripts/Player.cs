@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-public class FirstTry : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public enum Direction
     {
@@ -23,17 +23,25 @@ public class FirstTry : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
-    // IN UNITY FIELDS //
+    // UNITY FIELDS //
     public float acceleration;
-    public float maxSpeed;
+    public float maxSpeedX;
+    public float maxSpeedY;
+    public float wallRideSpeedY;
     public float airControl;
     public float jumpStrengh;
     public float wallJumpStrengh;
 
     public bool doubleJump;
     public bool isGrounded;
+    public bool isWalled;
     public bool isWalledLeft;
     public bool isWalledRight;
+
+    // PRIVATE FIELDS //
+    private bool isDoubleJumping = false;
+    private const float DOUBLE_JUMP_DURATION = 0.5f;
+    private float doubleJumpTime = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +54,16 @@ public class FirstTry : MonoBehaviour
         isGrounded = Physics2D.OverlapArea(leftGroundedPoint.position, rightGroundedPoint.position);
         isWalledLeft = !isGrounded && Physics2D.OverlapArea(bottomLeftWalledPoint.position, topLeftWalledPoint.position);
         isWalledRight = !isGrounded && Physics2D.OverlapArea(bottomRightWalledPoint.position, topRightWalledPoint.position);
-        doubleJump = isGrounded || isWalledLeft || isWalledRight || doubleJump;
+        isWalled = isWalledLeft || isWalledRight;
+        doubleJump = isGrounded || doubleJump;
 
-        animator.SetBool("IsDoubleJumping", !doubleJump && rigidbody2D.velocity.y > 0);
-        if (isGrounded) animator.SetBool("IsDoubleJumping", false);
+        if (doubleJumpTime < 0)
+        {
+            doubleJumpTime = DOUBLE_JUMP_DURATION;
+            animator.SetBool("IsDoubleJumping", false);
+            isDoubleJumping = false;
+        }
+        else doubleJumpTime -= Time.deltaTime;
 
         // MOVE //
         if (Input.GetKey(KeyCode.D))
@@ -68,9 +82,9 @@ public class FirstTry : MonoBehaviour
         {
             rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, jumpStrengh);
             doubleJump = false;
-            if (!isGrounded || isWalledLeft || isWalledRight)
+
+            if (isWalled)
             {
-                animator.SetBool("IsDoubleJumping", true);
                 if (isWalledLeft)
                 {
                     rigidbody2D.velocity = new(wallJumpStrengh, jumpStrengh);
@@ -82,9 +96,16 @@ public class FirstTry : MonoBehaviour
                     spriteRenderer.flipX = true;
                 }
             }
+
+            if (!isGrounded && !isWalled)
+            {
+                animator.SetBool("IsDoubleJumping", true);
+                isDoubleJumping = true;
+            }
         }
 
-        LimitVelocity();
+        LimitXVelocity();
+        LimitYVelocity();
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
         animator.SetFloat("YSpeed", rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", isGrounded );
@@ -98,8 +119,13 @@ public class FirstTry : MonoBehaviour
         else rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - acceleration * airControl * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
     }
 
-    public void LimitVelocity()
+    public void LimitXVelocity()
     {
-        if (Math.Abs(rigidbody2D.velocity.x) > maxSpeed) rigidbody2D.velocity = new Vector3((rigidbody2D.velocity.x / Math.Abs(rigidbody2D.velocity.x)) * maxSpeed, rigidbody2D.velocity.y);
+        if (Math.Abs(rigidbody2D.velocity.x) > maxSpeedX) rigidbody2D.velocity = new Vector3((rigidbody2D.velocity.x / Math.Abs(rigidbody2D.velocity.x)) * maxSpeedX, rigidbody2D.velocity.y);
+    }
+
+    public void LimitYVelocity()
+    {
+        if (Math.Abs(rigidbody2D.velocity.y) > maxSpeedY) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, (rigidbody2D.velocity.y / Math.Abs(rigidbody2D.velocity.y)) * maxSpeedY);
     }
 }
