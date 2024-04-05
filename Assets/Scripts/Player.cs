@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,18 +11,20 @@ public class Player : MonoBehaviour
         Right = 1
     }
 
-    // ATTACH GAMEOBJECT //
-    public Transform leftGroundedPoint;
-    public Transform rightGroundedPoint;
-    public Transform bottomLeftWalledPoint;
-    public Transform topLeftWalledPoint;
-    public Transform bottomRightWalledPoint;
-    public Transform topRightWalledPoint;
-
     // COMPONENTS //
     public Rigidbody2D rigidbody2D;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+
+    // BULLETS //
+    public Transform bulletSpawnPointRight;
+    public Transform bulletSpawnPointLeft;
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 10;
+
+    // POWERS //
+    public float jumpMultiplicater;
+    public float respirationTime;
 
     // UNITY FIELDS //
     public float acceleration;
@@ -51,9 +54,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics2D.OverlapArea(leftGroundedPoint.position, rightGroundedPoint.position);
-        isWalledLeft = !isGrounded && Physics2D.OverlapArea(bottomLeftWalledPoint.position, topLeftWalledPoint.position);
-        isWalledRight = !isGrounded && Physics2D.OverlapArea(bottomRightWalledPoint.position, topRightWalledPoint.position);
+        isWalledLeft = !isGrounded && isWalledLeft;
+        isWalledRight = !isGrounded && isWalledRight;
         isWalled = isWalledLeft || isWalledRight;
         doubleJump = isGrounded || doubleJump;
 
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
         }
         else doubleJumpTime -= Time.deltaTime;
 
-        // MOVE //
+        // MOVE 
         if (Input.GetKey(KeyCode.D))
         {
             spriteRenderer.flipX = false;
@@ -111,6 +113,7 @@ public class Player : MonoBehaviour
         animator.SetBool("IsGrounded", isGrounded );
         animator.SetBool("IsFalling", !isGrounded && rigidbody2D.velocity.y < 0);
         animator.SetBool("IsJumping", !isGrounded && rigidbody2D.velocity.y > 0);
+
     }
 
     public void Move(Direction direction)
