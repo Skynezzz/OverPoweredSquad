@@ -41,29 +41,39 @@ public class Characters : MonoBehaviour
             currentPower.Power();
         }
 
-        // SWITCH
+        // SWITCH CHARACTERS
         if (Input.GetKey(KeyCode.Alpha1))
         {
+            currentPower.OnExit();
             animator.runtimeAnimatorController = Frog;
             currentPower = frogPower;
+            currentPower.OnEnter();
         }
         if (Input.GetKey(KeyCode.Alpha2))
         {
+            currentPower.OnExit();
             animator.runtimeAnimatorController = Bear;
             currentPower = bearPower;
+            currentPower.OnEnter();
 
         }
         if (Input.GetKey(KeyCode.Alpha3))
         {
+            currentPower.OnExit();
             animator.runtimeAnimatorController = Diver;
             currentPower = diverPower;
+            currentPower.OnEnter();
 
         }
         if (Input.GetKey(KeyCode.Alpha4))
         {
+            currentPower.OnExit();
             animator.runtimeAnimatorController = Mask;
             currentPower = maskPower;
+            currentPower.OnEnter();
+
         }
+        //
     }
 }
 
@@ -75,12 +85,19 @@ class Powers : MonoBehaviour
     {
         PPD = playerPowersData;
     }
+    public virtual void OnEnter() { }
+    public virtual void OnExit() { }
     public virtual void Power() { }
 }
 
 class FrogPower : Powers
 {
     public FrogPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
+
+    public override void OnEnter()
+    {
+
+    }
 
     public override void Power()
     {
@@ -94,12 +111,21 @@ class FrogPower : Powers
             if (PPD.movement.isGrounded && !PPD.movement.isWalled) PPD.movement.doubleJump = true;
         } 
     }
+
+    public override void OnExit()
+    {
+
+    }
 }
 
 class MaskPower : Powers
 {
     public MaskPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
-    
+
+    public override void OnEnter()
+    {
+        PPD.movement.maxSpeedX = 20;
+    }
     public override void Power()
     {
         if (PPD.spriteRenderer.flipX == true)
@@ -113,25 +139,45 @@ class MaskPower : Powers
             bullet.GetComponent<Rigidbody2D>().velocity = PPD.bulletSpawner.bulletSpawnPointRight.right * PPD.bulletSpawner.bulletSpeed;
         }
     }
+    public override void OnExit()
+    {
+        PPD.movement.maxSpeedX = 15;
+    }
 }
 
 class DiverPower : Powers
 {
     public DiverPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
+    public override void OnEnter()
+    {
+        PPD.movement.respirationTime = 99999;
+    }
     public override void Power()
     {
         // utilise de l'eau ou jsp
+    }
+    public override void OnExit()
+    {
+        PPD.movement.respirationTime = 6;
     }
 }
 
 class BearPower : Powers
 {
+    public override void OnEnter()
+    {
+        PPD.rigidbody2D.mass = 100;
+    }
     public BearPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
     public override void Power()
     {
         // casser si objet cassable en face de lui 
+    }
+    public override void OnExit()
+    {
+        PPD.rigidbody2D.mass = 1;
     }
 }
 
