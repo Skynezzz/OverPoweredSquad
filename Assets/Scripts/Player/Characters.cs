@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
@@ -173,7 +174,28 @@ class BearPower : Powers
 
     public override void Power()
     {
-        // casser si objet cassable en face de lui 
+        print("oui");
+        BulletSpawner bulletSpawner = PPD.gameObject.GetComponent<BulletSpawner>();
+        BrickBreaker leftPoint = bulletSpawner.bulletSpawnPointLeft.gameObject.GetComponent<BrickBreaker>();
+        BrickBreaker rightPoint = bulletSpawner.bulletSpawnPointRight.gameObject.GetComponent<BrickBreaker>();
+
+        if (PPD.spriteRenderer.flipX == true)
+        {
+            print("flip");
+            if (leftPoint.isTriggered == true)
+            {
+                Destroy(leftPoint.brick);
+            }
+        }
+        else
+        {
+            print("hein?");
+            if (rightPoint.isTriggered == true)
+            {
+                print(rightPoint);
+                Destroy(rightPoint.brick);
+            }
+        }
     }
     public override void OnExit()
     {
