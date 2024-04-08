@@ -20,18 +20,16 @@ public class Movement : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
-    // POWERS //
-    public float jumpMultiplicater;
-    public float respirationTime;
-
     // UNITY FIELDS //
     //Float
-    public float acceleration;
+    public float moveStrengh;
+    public float slowStrengh;
+    public float maxRunSpeed;
     public float jumpStrengh;
     public float wallJumpStrengh;
     public float airControl;
-    public float maxSpeedX;
-    public float maxSpeedY;
+    public float groundFriction;
+    public float airFriction;
     public float wallRideDropSpeed;
     //Bool
     public bool doubleJump;
@@ -41,64 +39,86 @@ public class Movement : MonoBehaviour
     public bool isWalledRight;
 
     // PRIVATE FIELDS //
-    private float currentMaxSpeedX;
-    private float currentMaxSpeedY;
+    private Direction movingSide;
 
 
     // FUNCTIONS //
 
-    private void Start()
+    void Update()
     {
-        currentMaxSpeedX = maxSpeedX;
-        currentMaxSpeedY = maxSpeedY;
+        SetBool();
+
+        Move();
+
+        Jump();
+
+        setFrictionOnVelocity();
+
+        SetAnimatorValues();
     }
 
-    // UPDATE //
-    void Update()
+    private void SetBool()
     {
         isWalledLeft = !isGrounded && isWalledLeft;
         isWalledRight = !isGrounded && isWalledRight;
         isWalled = isWalledLeft || isWalledRight;
         doubleJump = isGrounded || doubleJump;
 
+        if (rigidbody2D.velocity.x >= 0) movingSide = Direction.Right;
+        else movingSide = Direction.Left;
+    }
 
-        // MOVE 
+    private void Move()
+    {
         if (Input.GetKey(KeyCode.D))
         {
             spriteRenderer.flipX = false;
-            if (!isWalledRight) Move(Direction.Left);
+            if (!isWalledRight && rigidbody2D.velocity.x < maxRunSpeed) MoveOn(Direction.Left);
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             spriteRenderer.flipX = true;
-            if (!isWalledLeft) Move(Direction.Right);
+            if (!isWalledLeft && rigidbody2D.velocity.x > -maxRunSpeed) MoveOn(Direction.Right);
         }
+        else
+        {
+            SlowDown();
+        }
+    }
 
-        // JUMP //
+    private void Jump()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && (doubleJump || isWalled))
         {
             rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, jumpStrengh);
 
             if (!isGrounded && !isWalled) StartCoroutine(DoubleJump());
-            else Jump();
+            else Jump_();
         }
-
-        if (isWalled) currentMaxSpeedY = wallRideDropSpeed;
-        else currentMaxSpeedY = maxSpeedY;
-        LimitXVelocity();
-        LimitYVelocity();
+    }
+    
+    private void SetAnimatorValues()
+    {
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
         animator.SetFloat("YSpeed", rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", isGrounded);
     }
 
-    public void Move(Direction direction)
+    public void MoveOn(Direction direction)
     {
-        if (isGrounded) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - acceleration * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
-        else rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - acceleration * airControl * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
+        if (isGrounded) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - moveStrengh * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
+        else rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - moveStrengh * airControl * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
     }
 
-    void Jump()
+    public void SlowDown()
+    {
+        if (isGrounded)
+        {
+            rigidbody2D.velocity = new(rigidbody2D.velocity.x - (slowStrengh * Time.deltaTime) * (int)movingSide, rigidbody2D.velocity.y);
+        }
+    }
+
+    void Jump_()
     {
         if (isWalled)
         {
@@ -119,20 +139,20 @@ public class Movement : MonoBehaviour
     {
         animator.SetBool("IsDoubleJumping", true);
         doubleJump = false;
-        Jump();
+        Jump_();
 
         yield return new WaitForSeconds(0.5f);
 
         animator.SetBool("IsDoubleJumping", false);
     }
 
-    public void LimitXVelocity()
+    public void setFrictionOnVelocity()
     {
-        if (Math.Abs(rigidbody2D.velocity.x) > currentMaxSpeedX) rigidbody2D.velocity = new Vector3((rigidbody2D.velocity.x / Math.Abs(rigidbody2D.velocity.x)) * currentMaxSpeedX, rigidbody2D.velocity.y);
-    }
+        Vector2 constraint;
+        if (isGrounded) constraint = new(groundFriction * Time.deltaTime * rigidbody2D.velocity.x, 0);
+        else constraint = new(airFriction * Time.deltaTime * rigidbody2D.velocity.x, airFriction * Time.deltaTime * rigidbody2D.velocity.y);
+        rigidbody2D.velocity = new(rigidbody2D.velocity.x - constraint.x, rigidbody2D.velocity.y - constraint.y);
 
-    public void LimitYVelocity()
-    {
-        if (rigidbody2D.velocity.y < -currentMaxSpeedY) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, -currentMaxSpeedY);
+        if (isWalled && rigidbody2D.velocity.y < -wallRideDropSpeed) rigidbody2D.velocity = new(rigidbody2D.velocity.x, -wallRideDropSpeed);
     }
 }

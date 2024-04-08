@@ -101,10 +101,10 @@ class FrogPower : Powers
 
     public override void Power()
     {
-        if (PPD.movement.doubleJump)
+        if (PPD.movement.isGrounded)
         {
 
-            PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.movement.jumpStrengh * PPD.movement.jumpMultiplicater);
+            PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.movement.jumpStrengh * PPD.jumpMultiplicater);
 
             PPD.movement.doubleJump = false;
 
@@ -124,7 +124,7 @@ class MaskPower : Powers
 
     public override void OnEnter()
     {
-        PPD.movement.maxSpeedX = 20;
+        PPD.movement.maxRunSpeed = 20;
     }
     public override void Power()
     {
@@ -141,7 +141,7 @@ class MaskPower : Powers
     }
     public override void OnExit()
     {
-        PPD.movement.maxSpeedX = 15;
+        PPD.movement.maxRunSpeed = 15;
     }
 }
 
@@ -151,7 +151,7 @@ class DiverPower : Powers
 
     public override void OnEnter()
     {
-        PPD.movement.respirationTime = 99999;
+        PPD.respirationTime = 99999;
     }
     public override void Power()
     {
@@ -159,7 +159,7 @@ class DiverPower : Powers
     }
     public override void OnExit()
     {
-        PPD.movement.respirationTime = 6;
+        PPD.respirationTime = 6;
     }
 }
 
