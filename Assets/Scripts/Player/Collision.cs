@@ -5,53 +5,45 @@ public class Player_Collision : MonoBehaviour
 {
     public GameObject player;
     public string selectedTrigger;
-    Player sPlayer;
+    public bool test;
+    Movement playerMovement;
 
     public void Start()
     {
-        sPlayer = player.GetComponent<Player>();
+        playerMovement = player.GetComponent<Movement>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
+            test = true;
             switch (selectedTrigger)
             {
                 case "isGrounded":
-                    sPlayer.isGrounded = true;
+                    playerMovement.isGrounded = true;
                     break;
                     
                 case "isWalledLeft":
-                    sPlayer.isWalledLeft = true;
+                    playerMovement.isWalledLeft = true;
                     break;
                     
                 case "isWalledRight":
-                    sPlayer.isWalledRight = true;
+                    playerMovement.isWalledRight = true;
                     break;
 
             }
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            switch (selectedTrigger)
-            {
-                case "isGrounded":
-                    sPlayer.isGrounded = false;
-                    break;
-
-                case "isWalledLeft":
-                    sPlayer.isWalledLeft = false;
-                    break;
-
-                case "isWalledRight":
-                    sPlayer.isWalledRight = false;
-                    break;
-
-            }
+            test = false;
+            playerMovement.isGrounded = false;
+            playerMovement.isWalledLeft = false;
+            playerMovement.isWalledRight = false;
         }
     }
 }

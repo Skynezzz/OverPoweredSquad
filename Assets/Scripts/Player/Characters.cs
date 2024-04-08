@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class Characters : MonoBehaviour
 {
-
-    public Player player;
+    PlayerPowersData playerPowersData;
 
     public Animator animator;
 
@@ -25,10 +24,12 @@ public class Characters : MonoBehaviour
 
     private void Start()
     {
-        frogPower = new(player);
-        bearPower = new(player);
-        diverPower = new(player);
-        maskPower = new(player);
+        playerPowersData = GetComponent<PlayerPowersData>();
+
+        frogPower = new(playerPowersData);
+        bearPower = new(playerPowersData);
+        diverPower = new(playerPowersData);
+        maskPower = new(playerPowersData);
 
         currentPower = frogPower;
     }
@@ -68,55 +69,55 @@ public class Characters : MonoBehaviour
 
 class Powers : MonoBehaviour
 {
-    protected Player player;
+    protected PlayerPowersData PPD;
 
-    public Powers(Player pPlayer)
+    public Powers(PlayerPowersData playerPowersData)
     {
-        player = pPlayer;
+        PPD = playerPowersData;
     }
     public virtual void Power() { }
 }
 
 class FrogPower : Powers
 {
-    public FrogPower(Player pPlayer) : base(pPlayer) { }
+    public FrogPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
     public override void Power()
     {
-        if (player.doubleJump)
+        if (PPD.movement.doubleJump)
         {
-            
-            player.rigidbody2D.velocity = new(player.rigidbody2D.velocity.x, player.jumpStrengh * player.jumpMultiplicater);
 
-            player.doubleJump = false;
+            PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.movement.jumpStrengh * PPD.movement.jumpMultiplicater);
 
-            if (player.isGrounded && !player.isWalled) player.doubleJump = true;
+            PPD.movement.doubleJump = false;
+
+            if (PPD.movement.isGrounded && !PPD.movement.isWalled) PPD.movement.doubleJump = true;
         } 
     }
 }
 
 class MaskPower : Powers
 {
-    public MaskPower(Player pPlayer) : base(pPlayer) { }
+    public MaskPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
     
     public override void Power()
     {
-        if (player.spriteRenderer.flipX == true)
+        if (PPD.spriteRenderer.flipX == true)
         {
-            var bullet = Instantiate(player.bulletPrefab, player.bulletSpawnPointLeft.position, player.bulletSpawnPointLeft.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = -player.bulletSpawnPointLeft.right * player.bulletSpeed;
+            GameObject bullet = Instantiate(PPD.bulletSpawner.bulletPrefab, PPD.bulletSpawner.bulletSpawnPointLeft.position, PPD.bulletSpawner.bulletSpawnPointLeft.rotation);
+            bullet.GetComponent<Rigidbody2D>().velocity = -PPD.bulletSpawner.bulletSpawnPointLeft.right * PPD.bulletSpawner.bulletSpeed;
         }
-        else if (player.spriteRenderer.flipX == false)
+        else
         {
-            var bullet = Instantiate(player.bulletPrefab, player.bulletSpawnPointRight.position, player.bulletSpawnPointRight.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = player.bulletSpawnPointRight.right * player.bulletSpeed;
+            GameObject bullet = Instantiate(PPD.bulletSpawner.bulletPrefab, PPD.bulletSpawner.bulletSpawnPointRight.position, PPD.bulletSpawner.bulletSpawnPointRight.rotation);
+            bullet.GetComponent<Rigidbody2D>().velocity = PPD.bulletSpawner.bulletSpawnPointRight.right * PPD.bulletSpawner.bulletSpeed;
         }
     }
 }
 
 class DiverPower : Powers
 {
-    public DiverPower(Player pPlayer) : base(pPlayer) { }
+    public DiverPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
     public override void Power()
     {
@@ -126,7 +127,7 @@ class DiverPower : Powers
 
 class BearPower : Powers
 {
-    public BearPower(Player pPlayer) : base(pPlayer) { }
+    public BearPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
     public override void Power()
     {
