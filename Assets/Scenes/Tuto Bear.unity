@@ -19786,12 +19786,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071647757}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 50.871727, y: 3.6696446, z: 0.36594108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1262121891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1071647759
 MonoBehaviour:
@@ -20679,6 +20679,7 @@ Transform:
   - {fileID: 1615632687}
   - {fileID: 856116641}
   - {fileID: 292177373}
+  - {fileID: 1071647758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1425187190 stripped
@@ -21181,6 +21182,8 @@ MonoBehaviour:
   movement: {fileID: 0}
   spriteRenderer: {fileID: 0}
   bulletSpawner: {fileID: 0}
+  jumpMultiplicater: 0
+  respirationTime: 0
 --- !u!114 &1680106802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21897,4 +21900,3 @@ SceneRoots:
   - {fileID: 1252106818}
   - {fileID: 1680106796}
   - {fileID: 1262121891}
-  - {fileID: 1071647758}
