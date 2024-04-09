@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Movement : MonoBehaviour
 
     // FIELDS //
 
+<<<<<<< Updated upstream
     // COMPONENTS //
     public Rigidbody2D rigidbody2D;
     public Animator animator;
@@ -26,6 +28,9 @@ public class Movement : MonoBehaviour
     public float respirationTime;
 
     // UNITY FIELDS //
+=======
+    // PUBLIC UNITY //
+>>>>>>> Stashed changes
     //Float
     public float moveStrengh;
     public float slowStrengh;
@@ -38,26 +43,58 @@ public class Movement : MonoBehaviour
     public float airFriction;
     public float wallRideDropSpeed;
     //Bool
+<<<<<<< Updated upstream
     public bool doubleJump;
     public bool dash;
     public bool isGrounded;
     public bool isWalled;
     public bool isWalledLeft;
     public bool isWalledRight;
+=======
+    public Dictionary<string, bool> booleens;
+>>>>>>> Stashed changes
 
-    // PRIVATE FIELDS //
+    // PRIVATE //
+
+    // COMPONENTS //
+    private Rigidbody2D rigidbody2D;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+
+    // FIELDS //
     private Direction movingSide;
 
 
     // FUNCTIONS //
 
-    void Update()
+    private void Start()
+    {
+        booleens = new Dictionary<string, bool>
+        {
+            { "doubleJump", false },
+            { "isGrounded", false },
+            { "isWalled", false },
+            { "isWalledLeft", false },
+            { "isWalledRight", false },
+            { "isLeadered", false }
+        };
+
+
+
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
     {
         SetBool();
 
         Move();
 
         Jump();
+
+        MapItems();
 
         setFrictionOnVelocity();
 
@@ -66,10 +103,10 @@ public class Movement : MonoBehaviour
 
     private void SetBool()
     {
-        isWalledLeft = !isGrounded && isWalledLeft;
-        isWalledRight = !isGrounded && isWalledRight;
-        isWalled = isWalledLeft || isWalledRight;
-        doubleJump = isGrounded || doubleJump;
+        booleens["isWalledLeft"] = !booleens["isGrounded"] && booleens["isWalledLeft"];
+        booleens["isWalledRight"] = !booleens["isGrounded"] && booleens["isWalledRight"];
+        booleens["isWalled"] = booleens["isWalledLeft"] || booleens["isWalledRight"];
+        booleens["doubleJump"] = booleens["isGrounded"] || booleens["doubleJump"];
 
         if (rigidbody2D.velocity.x >= 0) movingSide = Direction.Right;
         else movingSide = Direction.Left;
@@ -80,12 +117,12 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             spriteRenderer.flipX = false;
-            if (!isWalledRight && rigidbody2D.velocity.x < maxRunSpeed) MoveOn(Direction.Left);
+            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) MoveOn(Direction.Left);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             spriteRenderer.flipX = true;
-            if (!isWalledLeft && rigidbody2D.velocity.x > -maxRunSpeed) MoveOn(Direction.Right);
+            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) MoveOn(Direction.Right);
         }
         else
         {
@@ -95,11 +132,11 @@ public class Movement : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (doubleJump || isWalled))
+        if (Input.GetKeyDown(KeyCode.Space) && (booleens["doubleJump"] || booleens["isWalled"]))
         {
             rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, jumpStrengh);
 
-            if (!isGrounded && !isWalled) StartCoroutine(DoubleJump());
+            if (!booleens["isGrounded"] && !booleens["isWalled"]) StartCoroutine(DoubleJump());
             else Jump_();
         }
     }
@@ -108,33 +145,45 @@ public class Movement : MonoBehaviour
     {
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
         animator.SetFloat("YSpeed", rigidbody2D.velocity.y);
-        animator.SetBool("IsGrounded", isGrounded);
+        animator.SetBool("IsGrounded", booleens["isGrounded"]);
     }
 
-    public void MoveOn(Direction direction)
+    private void MoveOn(Direction direction)
     {
-        if (isGrounded) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - moveStrengh * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
+        if (booleens["isGrounded"]) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - moveStrengh * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
         else rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - moveStrengh * airControl * Time.deltaTime * (int)direction, rigidbody2D.velocity.y);
     }
 
-    public void SlowDown()
+    private void MapItems()
     {
-        if (isGrounded)
+        if (rigidbody2D.velocity.y <= 0.01)
+        {
+            if (Input.GetKey(KeyCode.S)) SetPlateforms(false);
+            else SetPlateforms(true);
+        }
+        else SetPlateforms(false);
+
+
+    }
+
+    private void SlowDown()
+    {
+        if (booleens["isGrounded"])
         {
             rigidbody2D.velocity = new(rigidbody2D.velocity.x - (slowStrengh * Time.deltaTime) * (int)movingSide, rigidbody2D.velocity.y);
         }
     }
 
-    void Jump_()
+    private void Jump_()
     {
-        if (isWalled)
+        if (booleens["isWalled"])
         {
-            if (isWalledLeft)
+            if (booleens["isWalledLeft"])
             {
                 rigidbody2D.velocity = new(wallJumpStrengh, jumpStrengh);
                 spriteRenderer.flipX = false;
             }
-            if (isWalledRight)
+            if (booleens["isWalledRight"])
             {
                 rigidbody2D.velocity = new(-wallJumpStrengh, jumpStrengh);
                 spriteRenderer.flipX = true;
@@ -145,7 +194,7 @@ public class Movement : MonoBehaviour
     private IEnumerator DoubleJump()
     {
         animator.SetBool("IsDoubleJumping", true);
-        doubleJump = false;
+        booleens["doubleJump"] = false;
         Jump_();
 
         yield return new WaitForSeconds(0.5f);
@@ -153,13 +202,23 @@ public class Movement : MonoBehaviour
         animator.SetBool("IsDoubleJumping", false);
     }
 
-    public void setFrictionOnVelocity()
+    private void setFrictionOnVelocity()
     {
         Vector2 constraint;
-        if (isGrounded) constraint = new(groundFriction * Time.deltaTime * rigidbody2D.velocity.x, 0);
+        if (booleens["isGrounded"]) constraint = new(groundFriction * Time.deltaTime * rigidbody2D.velocity.x, 0);
         else constraint = new(airFriction * Time.deltaTime * rigidbody2D.velocity.x, airFriction * Time.deltaTime * rigidbody2D.velocity.y);
         rigidbody2D.velocity = new(rigidbody2D.velocity.x - constraint.x, rigidbody2D.velocity.y - constraint.y);
 
-        if (isWalled && rigidbody2D.velocity.y < -wallRideDropSpeed) rigidbody2D.velocity = new(rigidbody2D.velocity.x, -wallRideDropSpeed);
+        if (booleens["isWalled"] && rigidbody2D.velocity.y < -wallRideDropSpeed) rigidbody2D.velocity = new(rigidbody2D.velocity.x, -wallRideDropSpeed);
+    }
+
+    private void SetPlateforms(bool enable)
+    {
+        GameObject[] plateforms = GameObject.FindGameObjectsWithTag("Plateform");
+        foreach (GameObject plateform in plateforms)
+        {
+            var collider = plateform.GetComponent<CompositeCollider2D>();
+            if (collider != null) collider.isTrigger = !enable;
+        }
     }
 }

@@ -5,7 +5,6 @@ public class Player_Collision : MonoBehaviour
 {
     public GameObject player;
     public string selectedTrigger;
-    public bool test;
     Movement playerMovement;
 
     public void Start()
@@ -15,35 +14,11 @@ public class Player_Collision : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            test = true;
-            switch (selectedTrigger)
-            {
-                case "isGrounded":
-                    playerMovement.isGrounded = true;
-                    break;
-                    
-                case "isWalledLeft":
-                    playerMovement.isWalledLeft = true;
-                    break;
-                    
-                case "isWalledRight":
-                    playerMovement.isWalledRight = true;
-                    break;
-
-            }
-        }
+        playerMovement.booleens[selectedTrigger] = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            test = false;
-            playerMovement.isGrounded = false;
-            playerMovement.isWalledLeft = false;
-            playerMovement.isWalledRight = false;
-        }
+        playerMovement.booleens[selectedTrigger] = false;
     }
 }

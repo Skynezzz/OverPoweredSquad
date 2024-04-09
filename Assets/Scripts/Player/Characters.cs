@@ -102,14 +102,14 @@ class FrogPower : Powers
 
     public override void Power()
     {
-        if (PPD.movement.isGrounded)
+        if (PPD.movement.booleens["isGrounded"])
         {
 
             PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.movement.jumpStrengh * PPD.jumpMultiplicater);
 
-            PPD.movement.doubleJump = false;
+            PPD.movement.booleens["doubleJump"] = false;
 
-            if (PPD.movement.isGrounded && !PPD.movement.isWalled) PPD.movement.doubleJump = true;
+            if (PPD.movement.booleens["isGrounded"] && !PPD.movement.booleens["isWalled"]) PPD.movement.booleens["doubleJump"] = true;
         } 
     }
 

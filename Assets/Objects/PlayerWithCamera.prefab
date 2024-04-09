@@ -203,7 +203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8105022254144114322, guid: 7646108cd370c0c46af2cf2ae3f4c491, type: 3}
       propertyPath: m_YDamping
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8105022254144114322, guid: 7646108cd370c0c46af2cf2ae3f4c491, type: 3}
       propertyPath: m_FollowOffset.y
