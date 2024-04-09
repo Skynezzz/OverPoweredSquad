@@ -138,7 +138,9 @@ GameObject:
   - component: {fileID: 2621959286939933072}
   - component: {fileID: 1151990342774459483}
   - component: {fileID: 4724225730379470909}
+  - component: {fileID: 3197689120709675696}
   - component: {fileID: 8654070410939369020}
+  - component: {fileID: -2478728607180469154}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -326,20 +328,39 @@ MonoBehaviour:
   rigidbody2D: {fileID: 4056574306096296666}
   animator: {fileID: 1151990342774459483}
   spriteRenderer: {fileID: 6456268693952927342}
-  jumpMultiplicater: 2
-  respirationTime: 0
-  acceleration: 20
-  jumpStrengh: 7
+  moveStrengh: 20
+  slowStrengh: 10
+  maxRunSpeed: 20
+  jumpStrengh: 8
   wallJumpStrengh: 10
   airControl: 0.35
-  maxSpeedX: 15
-  maxSpeedY: 20
+  groundFriction: 1
+  airFriction: 0.3
   wallRideDropSpeed: 2
   doubleJump: 0
   isGrounded: 0
   isWalled: 0
   isWalledLeft: 0
   isWalledRight: 0
+--- !u!114 &3197689120709675696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475921921214532714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f8ea9c920a06446bbec29b3f6d4e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goPlayer: {fileID: 1475921921214532714}
+  rigidbody2D: {fileID: 0}
+  movement: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  bulletSpawner: {fileID: 0}
+  jumpMultiplicater: 2
+  respirationTime: 10
 --- !u!114 &8654070410939369020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,12 +373,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31f673eb64fbda4e8304c1a52591898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPowersData: {fileID: 0}
   animator: {fileID: 1151990342774459483}
   Frog: {fileID: 9100000, guid: 15935a37346e3d2418505e71988ce028, type: 2}
   Bear: {fileID: 9100000, guid: 92472d294cd4f4644820f2efa718cabf, type: 2}
   Diver: {fileID: 9100000, guid: 00dce7540de937f4cbab47a30f0c816c, type: 2}
   Mask: {fileID: 9100000, guid: 5bab864ac3ca56a4f8350a73795275e0, type: 2}
+--- !u!114 &-2478728607180469154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475921921214532714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2127b2bd9864942438b71e7a04c9586b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  bulletSpawnPointRight: {fileID: 0}
+  bulletSpawnPointLeft: {fileID: 0}
+  bulletSpeed: 10
 --- !u!1 &2127009469484214878
 GameObject:
   m_ObjectHideFlags: 0

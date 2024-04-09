@@ -11,6 +11,9 @@ public class PlayerPowersData : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public BulletSpawner bulletSpawner;
 
+    public float jumpMultiplicater;
+    public float respirationTime;
+
     private void Start()
     {
         goPlayer = gameObject;
