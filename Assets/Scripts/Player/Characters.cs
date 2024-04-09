@@ -150,7 +150,22 @@ class MaskPower : Powers
 
 class DiverPower : Powers
 {
+    float remaningCdTime;
+    bool hthDash;
     public DiverPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
+
+    private void Update()
+    {
+        hthDash = PPD.movement.booleens["isGrounded"] || hthDash;
+        if (remaningCdTime <= 0)
+        {
+            PPD.dash = hthDash;
+        }
+        else
+        {
+            remaningCdTime -= Time.deltaTime;
+        }
+    }
 
     public override void OnEnter()
     {
@@ -158,13 +173,11 @@ class DiverPower : Powers
     }
     public override void Power()
     {
-        if (PPD.movement.booleens["dash"])
+        if (PPD.dash)
         {
-            PPD.rigidbody2D.velocity = new(PPD.movement.dashStrenght * PPD.movement.dashMultiplicater, PPD.rigidbody2D.velocity.y);
-
-            PPD.movement.booleens["dash"] = false;
-
-            if (PPD.movement.booleens["isGrounded"]) PPD.movement.booleens["dash"] = true;
+            PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y + PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+            remaningCdTime = PPD.dashCd;
+            PPD.dash = false;
         }
 
     }
