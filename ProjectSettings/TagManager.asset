@@ -9,6 +9,7 @@ TagManager:
   - Brick
   - Plateform
   - PlayerFeet
+  - Water
   layers:
   - Default
   - TransparentFX

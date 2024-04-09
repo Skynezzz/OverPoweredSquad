@@ -125,7 +125,8 @@ class MaskPower : Powers
 
     public override void OnEnter()
     {
-        PPD.movement.maxRunSpeed = 20;
+        PPD.movement.moveStrengh = 40;
+        PPD.movement.maxRunSpeed = 25;
     }
     public override void Power()
     {
@@ -142,6 +143,7 @@ class MaskPower : Powers
     }
     public override void OnExit()
     {
+        PPD.movement.moveStrengh = 30;
         PPD.movement.maxRunSpeed = 15;
     }
 }
@@ -156,7 +158,15 @@ class DiverPower : Powers
     }
     public override void Power()
     {
-        // utilise de l'eau ou jsp
+        if (PPD.movement.dash)
+        {
+            PPD.rigidbody2D.velocity = new(PPD.movement.dashStrenght * PPD.movement.dashMultiplicater, PPD.rigidbody2D.velocity.y);
+
+            PPD.movement.dash = false;
+
+            if (PPD.movement.isGrounded) PPD.movement.dash = true;
+        }
+
     }
     public override void OnExit()
     {
