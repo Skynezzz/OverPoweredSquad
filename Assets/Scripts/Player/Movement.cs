@@ -27,9 +27,6 @@ public class Movement : MonoBehaviour
     public float groundFriction;
     public float airFriction;
     public float wallRideDropSpeed;
-
-    public float dashStrenght;
-    public float dashMultiplicater;
     //Bool
     public Dictionary<string, bool> booleens;
 
@@ -55,8 +52,7 @@ public class Movement : MonoBehaviour
             { "isWalled", false },
             { "isWalledLeft", false },
             { "isWalledRight", false },
-            { "isLeadered", false },
-            { "dash", false }
+            { "isLeadered", false }
         };
 
 

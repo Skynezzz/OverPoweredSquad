@@ -11,8 +11,13 @@ public class PlayerPowersData : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public BulletSpawner bulletSpawner;
 
+    //float
     public float jumpMultiplicater;
     public float respirationTime;
+    public float dashStrenght;
+    public float dashCd;
+    //bool
+    [HideInInspector] public bool dash;
 
     private void Start()
     {
