@@ -16,43 +16,22 @@ public class Movement : MonoBehaviour
 
     // FIELDS //
 
-<<<<<<< Updated upstream
-    // COMPONENTS //
-    public Rigidbody2D rigidbody2D;
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
-
-    // POWERS //
-    public float jumpMultiplicater;
-    public float dashMultiplicater;
-    public float respirationTime;
-
-    // UNITY FIELDS //
-=======
     // PUBLIC UNITY //
->>>>>>> Stashed changes
     //Float
     public float moveStrengh;
     public float slowStrengh;
     public float maxRunSpeed;
     public float jumpStrengh;
-    public float dashStrenght;
     public float wallJumpStrengh;
     public float airControl;
     public float groundFriction;
     public float airFriction;
     public float wallRideDropSpeed;
+
+    public float dashStrenght;
+    public float dashMultiplicater;
     //Bool
-<<<<<<< Updated upstream
-    public bool doubleJump;
-    public bool dash;
-    public bool isGrounded;
-    public bool isWalled;
-    public bool isWalledLeft;
-    public bool isWalledRight;
-=======
     public Dictionary<string, bool> booleens;
->>>>>>> Stashed changes
 
     // PRIVATE //
 
@@ -76,7 +55,8 @@ public class Movement : MonoBehaviour
             { "isWalled", false },
             { "isWalledLeft", false },
             { "isWalledRight", false },
-            { "isLeadered", false }
+            { "isLeadered", false },
+            { "dash", false }
         };
 
 

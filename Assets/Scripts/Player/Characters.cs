@@ -158,13 +158,13 @@ class DiverPower : Powers
     }
     public override void Power()
     {
-        if (PPD.movement.dash)
+        if (PPD.movement.booleens["dash"])
         {
             PPD.rigidbody2D.velocity = new(PPD.movement.dashStrenght * PPD.movement.dashMultiplicater, PPD.rigidbody2D.velocity.y);
 
-            PPD.movement.dash = false;
+            PPD.movement.booleens["dash"] = false;
 
-            if (PPD.movement.isGrounded) PPD.movement.dash = true;
+            if (PPD.movement.booleens["isGrounded"]) PPD.movement.booleens["dash"] = true;
         }
 
     }
