@@ -14084,6 +14084,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4724225730379470909, guid: eba65e25f6b2f8b469d91260bbec73fe, type: 3}
+      propertyPath: dashStrenght
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724225730379470909, guid: eba65e25f6b2f8b469d91260bbec73fe, type: 3}
+      propertyPath: respirationTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724225730379470909, guid: eba65e25f6b2f8b469d91260bbec73fe, type: 3}
+      propertyPath: dashMultiplicater
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724225730379470909, guid: eba65e25f6b2f8b469d91260bbec73fe, type: 3}
       propertyPath: wallRideDropSpeed
       value: 2
       objectReference: {fileID: 0}

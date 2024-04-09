@@ -22,12 +22,14 @@ public class Movement : MonoBehaviour
 
     // POWERS //
     public float jumpMultiplicater;
+    public float dashMultiplicater;
     public float respirationTime;
 
     // UNITY FIELDS //
     //Float
     public float acceleration;
     public float jumpStrengh;
+    public float dashStrenght;
     public float wallJumpStrengh;
     public float airControl;
     public float maxSpeedX;
@@ -35,6 +37,7 @@ public class Movement : MonoBehaviour
     public float wallRideDropSpeed;
     //Bool
     public bool doubleJump;
+    public bool dash;
     public bool isGrounded;
     public bool isWalled;
     public bool isWalledLeft;

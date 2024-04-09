@@ -156,7 +156,15 @@ class DiverPower : Powers
     }
     public override void Power()
     {
-        // utilise de l'eau ou jsp
+        if (PPD.movement.dash)
+        {
+            PPD.rigidbody2D.velocity = new(PPD.movement.dashStrenght * PPD.movement.dashMultiplicater, PPD.rigidbody2D.velocity.y);
+
+            PPD.movement.dash = false;
+
+            if (PPD.movement.isGrounded) PPD.movement.dash = true;
+        }
+
     }
     public override void OnExit()
     {
