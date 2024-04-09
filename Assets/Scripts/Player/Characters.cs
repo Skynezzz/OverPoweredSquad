@@ -125,7 +125,8 @@ class MaskPower : Powers
 
     public override void OnEnter()
     {
-        PPD.movement.maxRunSpeed = 20;
+        PPD.movement.moveStrengh = 40;
+        PPD.movement.maxRunSpeed = 25;
     }
     public override void Power()
     {
@@ -142,6 +143,7 @@ class MaskPower : Powers
     }
     public override void OnExit()
     {
+        PPD.movement.moveStrengh = 30;
         PPD.movement.maxRunSpeed = 15;
     }
 }
