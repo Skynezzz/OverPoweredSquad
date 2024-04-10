@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
+        respawnPoint = transform;
+
         booleens = new Dictionary<string, bool>
         {
             { "doubleJump", false },
@@ -78,6 +81,14 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadSceneAsync(0);
+        }
+        if (transform.position.y < -100)
+        {
+            respawn();
+        }
         if (booleens["Water"])
         {
             SetBool();

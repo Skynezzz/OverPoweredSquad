@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48a0a83f10441f42ad9038c3a24d27f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 5201016762934739428}
   moveStrengh: 20
   waterMoveStrengh: 20
   slowStrengh: 10
