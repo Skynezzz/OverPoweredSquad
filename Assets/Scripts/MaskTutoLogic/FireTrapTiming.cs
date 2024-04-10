@@ -28,7 +28,7 @@ public class FireTrapTiming : MonoBehaviour
 
         // de-activate
         animator.SetBool("isFiring", false);
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.80f);
 
         StartCoroutine(WaitLightUp());
     }
@@ -37,7 +37,7 @@ public class FireTrapTiming : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && animator.GetBool("isFiring") == true)
         {
-            print("dead");
+            collision.gameObject.transform.position = collision.gameObject.GetComponent<Movement>().respawnPoint;
         }
     }
 }
