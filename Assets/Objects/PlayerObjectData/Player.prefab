@@ -340,10 +340,13 @@ MonoBehaviour:
   leaderRideSpeed: 4
   asGround:
   - Ground
+  - Water
+  - Plateform
   - Box
   - Brick
-  - Plateform
-  asMapItems: []
+  asMapItems:
+  - Leader
+  - Water
   movingSide: 0
 --- !u!114 &3197689120709675696
 MonoBehaviour:
@@ -363,9 +366,13 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   bulletSpawner: {fileID: 0}
   jumpMultiplicater: 2
+  massMultiplicator: 100
   respirationTime: 10
-  dashStrenght: 0
-  dashCd: 0
+  waterMoveStrenghMultiplicator: 3
+  dashStrenght: 30
+  dashCd: 1
+  moveStreghMultiplicator: 1.5
+  maxRunSpeedMultiplicator: 1.25
   dash: 0
 --- !u!114 &8654070410939369020
 MonoBehaviour:

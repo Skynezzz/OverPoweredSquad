@@ -11699,6 +11699,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1791833068619183474, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: moveStreghMultiplicator
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791833068619183474, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: maxRunSpeedMultiplicator
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2118005118797651045, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_Name
       value: PlayerWithCamera

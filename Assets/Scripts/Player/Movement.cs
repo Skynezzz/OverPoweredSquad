@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
 {
     public enum Direction
     {
+        None = 0,
+        Up = 3,
+        Down = -3,
         Left = -1,
         Right = 1
     }
@@ -36,8 +39,9 @@ public class Movement : MonoBehaviour
     public List<string> asGround;
     public List<string> asMapItems;
 
-    // PUBLIC UNITY //
+    // HIDE UNITY //
     [HideInInspector] public Direction movingSide;
+    [HideInInspector] public Direction movingDirection;
 
     // PRIVATE //
 
@@ -67,12 +71,6 @@ public class Movement : MonoBehaviour
             { "Leader", false }
         };
         
-        asMapItems = new List<string>
-        {
-            "Water",
-            "Leader"
-        };
-
         transform = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -128,13 +126,16 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
+        movingDirection = Direction.None;
         if (Input.GetKey(KeyCode.D))
         {
+            movingDirection = Direction.Right;
             spriteRenderer.flipX = false;
             if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) MoveOn(Direction.Left);
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            movingDirection = Direction.Left;
             spriteRenderer.flipX = true;
             if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) MoveOn(Direction.Right);
         }
@@ -146,30 +147,35 @@ public class Movement : MonoBehaviour
     
     private void MoveInWater()
     {
+        movingDirection = Direction.None;
         if (Input.GetKey(KeyCode.D))
         {
+            movingDirection = (Direction)((int)movingDirection + (int)Direction.Right);
             spriteRenderer.flipX = false;
-            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - waterMoveStrengh * Time.deltaTime * -1, rigidbody2D.velocity.y);
+            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x + waterMoveStrengh * Time.deltaTime * 1, rigidbody2D.velocity.y);
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            movingDirection = (Direction)((int)movingDirection + (int)Direction.Left);
             spriteRenderer.flipX = true;
-            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - waterMoveStrengh * Time.deltaTime * 1, rigidbody2D.velocity.y);
+            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x + waterMoveStrengh * Time.deltaTime * -1, rigidbody2D.velocity.y);
         }
         else
         {
             SlowDown();
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.W))
         {
+            movingDirection = (Direction)((int)movingDirection + (int)Direction.Up);
             spriteRenderer.flipY = false;
-            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y - waterMoveStrengh * Time.deltaTime * -1);
+            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + waterMoveStrengh * Time.deltaTime * 1);
         }
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.S))
         {
+            movingDirection = (Direction)((int)movingDirection + (int)Direction.Down);
             spriteRenderer.flipY = true;
-            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y - waterMoveStrengh * Time.deltaTime * 1);
+            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + waterMoveStrengh * Time.deltaTime * -1);
         }
     }
     

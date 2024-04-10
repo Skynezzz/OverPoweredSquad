@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Characters : MonoBehaviour
 {
@@ -125,10 +120,15 @@ class MaskPower : Powers
 {
     public MaskPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
+    float oldMoveStrengh;
+    float oldMaxRunSpeed;
+
     public override void OnEnter()
     {
-        PPD.movement.moveStrengh = 40;
-        PPD.movement.maxRunSpeed = 25;
+        oldMoveStrengh = PPD.movement.moveStrengh;
+        PPD.movement.moveStrengh = PPD.movement.moveStrengh * PPD.moveStreghMultiplicator;
+        oldMaxRunSpeed = PPD.movement.moveStrengh;
+        PPD.movement.maxRunSpeed = PPD.movement.maxRunSpeed * PPD.maxRunSpeedMultiplicator;
     }
     public override void Power()
     {
@@ -145,8 +145,8 @@ class MaskPower : Powers
     }
     public override void OnExit()
     {
-        PPD.movement.moveStrengh = 30;
-        PPD.movement.maxRunSpeed = 15;
+        PPD.movement.moveStrengh = oldMoveStrengh;
+        PPD.movement.maxRunSpeed = oldMaxRunSpeed;
     }
 }
 
@@ -154,6 +154,7 @@ class DiverPower : Powers
 {
     float remaningCdTime;
     bool hthDash;
+    float oldWaterMoveStrengh;
     public DiverPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
     public override void Update()
@@ -173,14 +174,44 @@ class DiverPower : Powers
     public override void OnEnter()
     {
         PPD.respirationTime = 99999;
+
+        oldWaterMoveStrengh = PPD.movement.waterMoveStrengh;
+        PPD.movement.waterMoveStrengh = PPD.movement.waterMoveStrengh * PPD.waterMoveStrenghMultiplicator;
     }
 
     public override void Power()
     {
         if (PPD.dash)
         {
-            if (PPD.spriteRenderer.flipX) PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y - PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
-            else PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y + PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+            switch((int)PPD.movement.movingDirection)
+            {
+                case (int)Movement.Direction.None:
+                    return;
+                case (int)Movement.Direction.Left:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x - PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+                    break;
+                case (int)Movement.Direction.Right:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x + PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+                    break;
+                case (int)Movement.Direction.Down:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.rigidbody2D.velocity.y - PPD.dashStrenght);
+                    break;
+                case (int)Movement.Direction.Up:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x, PPD.rigidbody2D.velocity.y + PPD.dashStrenght);
+                    break;
+                case (int)Movement.Direction.Up + (int)Movement.Direction.Left:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x - PPD.dashStrenght / 2, PPD.rigidbody2D.velocity.y + PPD.dashStrenght / 2);
+                    break;
+                case (int)Movement.Direction.Down + (int)Movement.Direction.Left:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x - PPD.dashStrenght / 2, PPD.rigidbody2D.velocity.y - PPD.dashStrenght / 2);
+                    break;
+                case (int)Movement.Direction.Up + (int)Movement.Direction.Right:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x + PPD.dashStrenght / 2, PPD.rigidbody2D.velocity.y + PPD.dashStrenght / 2);
+                    break;
+                case (int)Movement.Direction.Down + (int)Movement.Direction.Right:
+                    PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.x + PPD.dashStrenght / 2, PPD.rigidbody2D.velocity.y - PPD.dashStrenght / 2);
+                    break;
+            }
 
             remaningCdTime = PPD.dashCd;
             PPD.dash = false;
@@ -191,14 +222,18 @@ class DiverPower : Powers
     public override void OnExit()
     {
         PPD.respirationTime = 6;
+
+        PPD.movement.waterMoveStrengh = oldWaterMoveStrengh;
     }
 }
 
 class BearPower : Powers
 {
+    float oldMass;
     public override void OnEnter()
     {
-        PPD.rigidbody2D.mass = 100;
+        oldMass = PPD.rigidbody2D.mass;
+        PPD.rigidbody2D.mass = PPD.massMultiplicator;
     }
     public BearPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
@@ -229,7 +264,7 @@ class BearPower : Powers
     }
     public override void OnExit()
     {
-        PPD.rigidbody2D.mass = 1;
+        PPD.rigidbody2D.mass = oldMass;
     }
 }
 

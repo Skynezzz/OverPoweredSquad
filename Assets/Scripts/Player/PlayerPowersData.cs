@@ -12,13 +12,21 @@ public class PlayerPowersData : MonoBehaviour
     [HideInInspector] public BulletSpawner bulletSpawner;
 
     //float
+    //frog
     public float jumpMultiplicater;
+    //Bear
+    public float massMultiplicator;
+    //diver
     public float respirationTime;
+    public float waterMoveStrenghMultiplicator;
     public float dashStrenght;
     public float dashCd;
+    //mask
+    public float moveStreghMultiplicator;
+    public float maxRunSpeedMultiplicator;
     //bool
-    //[HideInInspector] public bool dash;
-    public bool dash;
+
+    [HideInInspector] public bool dash;
 
     private void Start()
     {
