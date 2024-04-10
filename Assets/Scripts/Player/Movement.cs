@@ -17,6 +17,8 @@ public class Movement : MonoBehaviour
     // FIELDS //
 
     // PUBLIC UNITY //
+    //Objects
+    Transform respawnPoint;
     //Float
     public float moveStrengh;
     public float slowStrengh;
@@ -26,6 +28,7 @@ public class Movement : MonoBehaviour
     public float airControl;
     public float groundFriction;
     public float airFriction;
+    public float waterFriction;
     public float wallRideDropSpeed;
     public float leaderRideSpeed;
     //Bool
@@ -82,17 +85,35 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        SetBool();
+        if (booleens["Water"])
+        { 
+            SetBool();
 
-        Move();
+            Move();
 
-        Jump();
+            Jump();
 
-        MapItems();
+            MapItems();
 
-        setFrictionOnVelocity();
+            setFrictionOnVelocityInWater();
 
-        SetAnimatorValues();
+            SetAnimatorValues();
+
+        }
+        else
+        {
+            SetBool();
+
+            Move();
+
+            Jump();
+
+            MapItems();
+
+            setFrictionOnVelocity();
+
+            SetAnimatorValues();
+        }
     }
 
     private void SetBool()
@@ -123,7 +144,7 @@ public class Movement : MonoBehaviour
             SlowDown();
         }
     }
-
+    
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && (booleens["doubleJump"] || booleens["isWalled"]))
@@ -210,6 +231,13 @@ public class Movement : MonoBehaviour
         rigidbody2D.velocity = new(rigidbody2D.velocity.x - constraint.x, rigidbody2D.velocity.y - constraint.y);
 
         if (booleens["isWalled"] && rigidbody2D.velocity.y < -wallRideDropSpeed) rigidbody2D.velocity = new(rigidbody2D.velocity.x, -wallRideDropSpeed);
+    }
+    
+    private void setFrictionOnVelocityInWater()
+    {
+        Vector2 constraint;
+        constraint = new(waterFriction * Time.deltaTime * rigidbody2D.velocity.x, waterFriction * Time.deltaTime * rigidbody2D.velocity.y);
+        rigidbody2D.velocity = new(rigidbody2D.velocity.x - constraint.x, rigidbody2D.velocity.y - constraint.y);
     }
 
     private void SetPlateforms(bool enable)
