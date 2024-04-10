@@ -10,6 +10,7 @@ TagManager:
   - Plateform
   - PlayerFeet
   - Water
+  - Undefined
   - Bullet
   - Leader
   layers:
