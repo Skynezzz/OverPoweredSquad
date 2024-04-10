@@ -27,8 +27,14 @@ public class Movement : MonoBehaviour
     public float groundFriction;
     public float airFriction;
     public float wallRideDropSpeed;
+    public float leaderRideSpeed;
     //Bool
     public Dictionary<string, bool> booleens;
+    public List<string> asGround;
+    public List<string> asMapItems;
+
+    // PUBLIC UNITY //
+    [HideInInspector] public Direction movingSide;
 
     // PRIVATE //
 
@@ -38,7 +44,6 @@ public class Movement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     // FIELDS //
-    private Direction movingSide;
 
 
     // FUNCTIONS //
@@ -52,10 +57,23 @@ public class Movement : MonoBehaviour
             { "isWalled", false },
             { "isWalledLeft", false },
             { "isWalledRight", false },
-            { "isLeadered", false }
+            { "Water", false },
+            { "Leader", false }
         };
 
-
+        asGround = new List<string>
+        {
+            "Ground",
+            "Box",
+            "Brick",
+            "Plateform"
+        };
+        
+        asMapItems = new List<string>
+        {
+            "Water",
+            "Leader"
+        };
 
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -139,7 +157,13 @@ public class Movement : MonoBehaviour
         }
         else SetPlateforms(false);
 
-
+        if (Input.GetKey(KeyCode.W))
+        {
+            if (booleens["Leader"])
+            {
+                rigidbody2D.velocity = new(rigidbody2D.velocity.x, leaderRideSpeed);
+            }
+        }
     }
 
     private void SlowDown()

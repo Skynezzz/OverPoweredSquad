@@ -37,6 +37,7 @@ public class Characters : MonoBehaviour
 
     void Update()
     {
+        currentPower.Update();
         if (Input.GetKeyDown(KeyCode.Q))
         {
             currentPower.Power();
@@ -86,6 +87,7 @@ class Powers : MonoBehaviour
     {
         PPD = playerPowersData;
     }
+    public virtual void Update() { }
     public virtual void OnEnter() { }
     public virtual void OnExit() { }
     public virtual void Power() { }
@@ -154,12 +156,13 @@ class DiverPower : Powers
     bool hthDash;
     public DiverPower(PlayerPowersData playerPowersData) : base(playerPowersData) { }
 
-    private void Update()
+    public override void Update()
     {
-        hthDash = PPD.movement.booleens["isGrounded"] || hthDash;
+        hthDash = PPD.movement.booleens["isGrounded"] || PPD.dash || hthDash;
         if (remaningCdTime <= 0)
         {
-            PPD.dash = hthDash;
+            PPD.dash = PPD.movement.booleens["isGrounded"] || hthDash;
+            if (PPD.movement.booleens["isGrounded"]) hthDash = true;
         }
         else
         {
@@ -171,16 +174,20 @@ class DiverPower : Powers
     {
         PPD.respirationTime = 99999;
     }
+
     public override void Power()
     {
         if (PPD.dash)
         {
-            PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y + PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+            if (PPD.spriteRenderer.flipX) PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y - PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+            else PPD.rigidbody2D.velocity = new(PPD.rigidbody2D.velocity.y + PPD.dashStrenght, PPD.rigidbody2D.velocity.y);
+
             remaningCdTime = PPD.dashCd;
             PPD.dash = false;
+            if (!PPD.movement.booleens["isGrounded"]) hthDash = false;
         }
-
     }
+
     public override void OnExit()
     {
         PPD.respirationTime = 6;

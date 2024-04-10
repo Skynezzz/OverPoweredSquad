@@ -1,10 +1,9 @@
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Player_Collision : MonoBehaviour
+public class StatePlayerMovement : MonoBehaviour
 {
     public GameObject player;
-    public string selectedTrigger;
     Movement playerMovement;
 
     public void Start()
@@ -14,11 +13,13 @@ public class Player_Collision : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (playerMovement.asGround.Contains(collision.gameObject.tag)) playerMovement.booleens[selectedTrigger] = true;
+        if (playerMovement.asMapItems.Contains(collision.gameObject.tag))
+            playerMovement.booleens[collision.gameObject.tag] = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (playerMovement.asGround.Contains(collision.gameObject.tag)) playerMovement.booleens[selectedTrigger] = false;
+        if (playerMovement.asMapItems.Contains(collision.gameObject.tag))
+            playerMovement.booleens[collision.gameObject.tag] = false;
     }
 }

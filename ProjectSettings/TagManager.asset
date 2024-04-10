@@ -12,7 +12,7 @@ TagManager:
   - Water
   - Undefined
   - Bullet
-  - PlayerCharacter
+  - Leader
   layers:
   - Default
   - TransparentFX

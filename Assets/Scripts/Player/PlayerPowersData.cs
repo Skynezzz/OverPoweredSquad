@@ -17,7 +17,8 @@ public class PlayerPowersData : MonoBehaviour
     public float dashStrenght;
     public float dashCd;
     //bool
-    [HideInInspector] public bool dash;
+    //[HideInInspector] public bool dash;
+    public bool dash;
 
     private void Start()
     {
