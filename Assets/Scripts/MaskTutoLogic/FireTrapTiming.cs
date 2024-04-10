@@ -37,7 +37,7 @@ public class FireTrapTiming : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && animator.GetBool("isFiring") == true)
         {
-            print("dead");
+            collision.gameObject.GetComponent<Movement>().respawn();
         }
     }
 }

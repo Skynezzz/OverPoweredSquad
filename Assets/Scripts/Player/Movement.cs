@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
 
     // PUBLIC UNITY //
     //Objects
-    Transform respawnPoint;
+    public Transform respawnPoint;
     //Float
     public float moveStrengh;
     public float waterMoveStrengh;
@@ -43,6 +43,7 @@ public class Movement : MonoBehaviour
     // PRIVATE //
 
     // COMPONENTS //
+    private Transform transform;
     private Rigidbody2D rigidbody2D;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -71,6 +72,7 @@ public class Movement : MonoBehaviour
             "Leader"
         };
 
+        transform = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -79,7 +81,7 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         if (booleens["Water"])
-        { 
+        {
             SetBool();
 
             MoveInWater();
@@ -172,7 +174,7 @@ public class Movement : MonoBehaviour
             else Jump_();
         }
     }
-    
+
     private void SetAnimatorValues()
     {
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
@@ -249,7 +251,7 @@ public class Movement : MonoBehaviour
 
         if (booleens["isWalled"] && rigidbody2D.velocity.y < -wallRideDropSpeed) rigidbody2D.velocity = new(rigidbody2D.velocity.x, -wallRideDropSpeed);
     }
-    
+
     private void setFrictionOnVelocityInWater()
     {
         Vector2 constraint;
@@ -265,5 +267,14 @@ public class Movement : MonoBehaviour
             var collider = plateform.GetComponent<CompositeCollider2D>();
             if (collider != null) collider.isTrigger = !enable;
         }
+    }
+
+    private void setRespawnPoint(Transform newTransform)
+    {
+        respawnPoint = newTransform;
+    } 
+    public void respawn()
+    {
+        transform.position = respawnPoint.position;
     }
 }
