@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour
     Transform respawnPoint;
     //Float
     public float moveStrengh;
+    public float waterMoveStrengh;
     public float slowStrengh;
     public float maxRunSpeed;
     public float jumpStrengh;
@@ -63,14 +64,6 @@ public class Movement : MonoBehaviour
             { "Water", false },
             { "Leader", false }
         };
-
-        asGround = new List<string>
-        {
-            "Ground",
-            "Box",
-            "Brick",
-            "Plateform"
-        };
         
         asMapItems = new List<string>
         {
@@ -89,16 +82,11 @@ public class Movement : MonoBehaviour
         { 
             SetBool();
 
-            Move();
-
-            Jump();
-
-            MapItems();
+            MoveInWater();
 
             setFrictionOnVelocityInWater();
 
             SetAnimatorValues();
-
         }
         else
         {
@@ -142,6 +130,35 @@ public class Movement : MonoBehaviour
         else
         {
             SlowDown();
+        }
+    }
+    
+    private void MoveInWater()
+    {
+        if (Input.GetKey(KeyCode.D))
+        {
+            spriteRenderer.flipX = false;
+            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - waterMoveStrengh * Time.deltaTime * -1, rigidbody2D.velocity.y);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            spriteRenderer.flipX = true;
+            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x - waterMoveStrengh * Time.deltaTime * 1, rigidbody2D.velocity.y);
+        }
+        else
+        {
+            SlowDown();
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            spriteRenderer.flipY = false;
+            if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y - waterMoveStrengh * Time.deltaTime * -1);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            spriteRenderer.flipY = true;
+            if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y - waterMoveStrengh * Time.deltaTime * 1);
         }
     }
     

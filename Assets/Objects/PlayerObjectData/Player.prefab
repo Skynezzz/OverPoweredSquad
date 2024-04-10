@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveStrengh: 20
+  waterMoveStrengh: 20
   slowStrengh: 10
   maxRunSpeed: 20
   jumpStrengh: 8
@@ -333,9 +334,14 @@ MonoBehaviour:
   airControl: 0.35
   groundFriction: 1
   airFriction: 0.3
+  waterFriction: 5
   wallRideDropSpeed: 2
   leaderRideSpeed: 4
-  asGround: []
+  asGround:
+  - Ground
+  - Box
+  - Brick
+  - Plateform
   asMapItems: []
   movingSide: 0
 --- !u!114 &3197689120709675696
