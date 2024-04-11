@@ -1387,16 +1387,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 94051754763149590, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -317.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 94051754763149590, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 5.68
       objectReference: {fileID: 0}
     - target: {fileID: 2118005118797651045, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_Name
       value: PlayerWithCamera
       objectReference: {fileID: 0}
     - target: {fileID: 5855304207792763153, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -317.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855304207792763153, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 5.68
       objectReference: {fileID: 0}
     - target: {fileID: 7014785228373488730, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: orthographic size
@@ -1441,6 +1449,14 @@ PrefabInstance:
     - target: {fileID: 7636046298662225433, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975707927734386214, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -317.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975707927734386214, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.68
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
