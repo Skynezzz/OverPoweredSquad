@@ -52,7 +52,7 @@ public class Movement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     // FIELDS //
-
+    float? zRotation;
 
     // FUNCTIONS //
 
@@ -75,6 +75,8 @@ public class Movement : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        zRotation = null;
     }
 
     private void Update()
@@ -86,6 +88,11 @@ public class Movement : MonoBehaviour
         if (transform.position.y < -30)
         {
             respawn();
+        }
+        if (zRotation != null)
+        {
+            transform.Rotate(0, 0, -(float)zRotation);
+            zRotation = null;
         }
         if (booleens["Water"])
         {
@@ -174,7 +181,6 @@ public class Movement : MonoBehaviour
             if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + waterMoveStrengh * Time.deltaTime * -1);
         }
 
-        float? zRotation = null;
         switch ((int)movingDirection)
         {
             case (int)Direction.None:
@@ -207,7 +213,8 @@ public class Movement : MonoBehaviour
         print(transform.rotation.z);
         if (zRotation != null)
         {
-            transform.rotation = new(0, 0, (float)(zRotation / 360), 1);
+            //transform.rotation = new(0, 0, (float)(zRotation*10), 1);
+            transform.Rotate(0, 0, (float)zRotation);
         }
     }
     
@@ -225,6 +232,13 @@ public class Movement : MonoBehaviour
 
     private void SetAnimatorValues()
     {
+        if (booleens["Water"])
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("YSpeed", 1);
+            animator.SetBool("IsGrounded", false);
+            return;
+        }
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
         animator.SetFloat("YSpeed", rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", booleens["isGrounded"]);
