@@ -15,6 +15,7 @@ TagManager:
   - Leader
   - PlayerCharacter
   - GameLogic
+  - Coin
   layers:
   - Default
   - TransparentFX
