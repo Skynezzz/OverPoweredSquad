@@ -19,7 +19,7 @@ public class ButtonLogicBullet : MonoBehaviour
     {
         if(b1.isTriggeredBullet)
         {
-            Destroy(GameObject.Find("Door"));
+            Destroy(GameObject.Find("DoorMask"));
         }
     }
 }

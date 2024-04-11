@@ -284,7 +284,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void setRespawnPoint(Transform newTransform)
+    public void setRespawnPoint(Transform newTransform)
     {
         respawnPoint = newTransform;
     } 
