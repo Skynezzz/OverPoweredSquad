@@ -151,13 +151,11 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             movingDirection = (Direction)((int)movingDirection + (int)Direction.Right);
-            spriteRenderer.flipX = false;
             if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x + waterMoveStrengh * Time.deltaTime * 1, rigidbody2D.velocity.y);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             movingDirection = (Direction)((int)movingDirection + (int)Direction.Left);
-            spriteRenderer.flipX = true;
             if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x + waterMoveStrengh * Time.deltaTime * -1, rigidbody2D.velocity.y);
         }
         else
@@ -168,14 +166,48 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             movingDirection = (Direction)((int)movingDirection + (int)Direction.Up);
-            spriteRenderer.flipY = false;
             if (!booleens["isWalledRight"] && rigidbody2D.velocity.x < maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + waterMoveStrengh * Time.deltaTime * 1);
         }
         else if (Input.GetKey(KeyCode.S))
         {
             movingDirection = (Direction)((int)movingDirection + (int)Direction.Down);
-            spriteRenderer.flipY = true;
             if (!booleens["isWalledLeft"] && rigidbody2D.velocity.x > -maxRunSpeed) rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + waterMoveStrengh * Time.deltaTime * -1);
+        }
+
+        float? zRotation = null;
+        switch ((int)movingDirection)
+        {
+            case (int)Direction.None:
+                return;
+            case (int)Direction.Left:
+                zRotation = 90;
+                break;
+            case (int)Direction.Right:
+                zRotation = -90;
+                break;
+            case (int)Direction.Down:
+                zRotation = 180;
+                break;
+            case (int)Direction.Up:
+                zRotation = 0;
+                break;
+            case (int)Direction.Up + (int)Direction.Left:
+                zRotation = 45;
+                break;
+            case (int)Direction.Down + (int)Direction.Left:
+                zRotation = 135;
+                break;
+            case (int)Direction.Up + (int)Direction.Right:
+                zRotation = -45;
+                break;
+            case (int)Direction.Down + (int)Direction.Right:
+                zRotation = -135;
+                break;
+        }
+        print(transform.rotation.z);
+        if (zRotation != null)
+        {
+            transform.rotation = new(0, 0, (float)(zRotation / 360), 1);
         }
     }
     
