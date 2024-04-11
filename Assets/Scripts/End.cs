@@ -19,7 +19,7 @@ public class EndPoint : MonoBehaviour
     private IEnumerator EndRoutine()
     {
         // SET END ANIMATION
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadSceneAsync(2);
     }
 }
