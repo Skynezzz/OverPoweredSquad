@@ -183,7 +183,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && (booleens["doubleJump"] || booleens["isWalled"]))
         {
-            rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, jumpStrengh);
+            rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y + jumpStrengh);
 
             if (!booleens["isGrounded"] && !booleens["isWalled"]) StartCoroutine(DoubleJump());
             else Jump_();
