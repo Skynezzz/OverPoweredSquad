@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
@@ -9,9 +7,10 @@ public class Coin : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
+            var gameLogic = GameObject.FindGameObjectWithTag("GameLogic");
+            gameLogic.GetComponent<GameLogic>().score++;
             animator.SetBool("hasTriggered", true);
             Destroy(gameObject, 0.5f);
-
         }
     }
 }

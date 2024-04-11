@@ -13,6 +13,8 @@ TagManager:
   - Undefined
   - Bullet
   - Leader
+  - PlayerCharacter
+  - GameLogic
   layers:
   - Default
   - TransparentFX
