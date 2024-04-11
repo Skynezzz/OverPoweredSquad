@@ -9,8 +9,11 @@ public class Checkpoints : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player") animator.SetBool("Checking", true);
-        collision.GetComponent<Movement>().setRespawnPoint(transform);
+        if (collision.gameObject.tag == "Player")
+        {
+            animator.SetBool("Checking", true);
+            collision.GetComponent<Movement>().setRespawnPoint(transform);
+        }
     }
 
 }
