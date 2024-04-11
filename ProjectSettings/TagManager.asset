@@ -13,6 +13,9 @@ TagManager:
   - Undefined
   - Bullet
   - Leader
+  - PlayerCharacter
+  - GameLogic
+  - Coin
   layers:
   - Default
   - TransparentFX

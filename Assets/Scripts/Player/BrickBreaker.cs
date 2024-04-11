@@ -7,7 +7,7 @@ public class BrickBreaker : MonoBehaviour
     public bool isTriggered = false;
     public GameObject brick;
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Brick") isTriggered = true;
         brick = collision.gameObject;
