@@ -20,6 +20,6 @@ public class EndPoint : MonoBehaviour
     {
         // SET END ANIMATION
         yield return new WaitForSeconds(2);
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(3);
     }
 }

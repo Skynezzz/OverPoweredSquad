@@ -613,7 +613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Level 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
   m_sharedMaterial: {fileID: 5037700411667533398, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
@@ -791,8 +791,9 @@ GameObject:
   - component: {fileID: 1318410232}
   - component: {fileID: 1318410231}
   - component: {fileID: 1318410234}
+  - component: {fileID: 1318410235}
   m_Layer: 5
-  m_Name: ButtonStart
+  m_Name: ButtonLevel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,9 +864,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 181591474}
-        m_TargetAssemblyTypeName: ButtonStart, Assembly-CSharp
-        m_MethodName: RunStart
+      - m_Target: {fileID: 1318410235}
+        m_TargetAssemblyTypeName: LevelButton, Assembly-CSharp
+        m_MethodName: StartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -965,6 +966,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1318410235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318410229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5461f0df5b87b784eab6225d0006da00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
 --- !u!1 &1406896026
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,8 +992,9 @@ GameObject:
   - component: {fileID: 1406896030}
   - component: {fileID: 1406896029}
   - component: {fileID: 1406896028}
+  - component: {fileID: 1406896032}
   m_Layer: 5
-  m_Name: ButtonExit
+  m_Name: ButtonBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,9 +1117,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 181591474}
-        m_TargetAssemblyTypeName: ButtonStart, Assembly-CSharp
-        m_MethodName: RunExit
+      - m_Target: {fileID: 1406896032}
+        m_TargetAssemblyTypeName: LevelButton, Assembly-CSharp
+        m_MethodName: StartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1152,6 +1167,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406896026}
   m_CullTransparentMesh: 1
+--- !u!114 &1406896032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406896026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5461f0df5b87b784eab6225d0006da00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: -1
 --- !u!1 &1566525286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Levels
+  m_text: Level 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
   m_sharedMaterial: {fileID: 5037700411667533398, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
@@ -1525,7 +1553,7 @@ GameObject:
   - component: {fileID: 2067778390}
   - component: {fileID: 2067778394}
   m_Layer: 5
-  m_Name: ButtonLevels
+  m_Name: ButtonLevel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,7 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5461f0df5b87b784eab6225d0006da00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 2
 --- !u!1 &2080042829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,7 +1976,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
   m_sharedMaterial: {fileID: 5037700411667533398, guid: 8ec934a1a9ba5454b8e60de7f7500979, type: 2}
