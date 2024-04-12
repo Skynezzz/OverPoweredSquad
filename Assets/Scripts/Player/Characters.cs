@@ -136,6 +136,7 @@ class MaskPower : Powers
         {
             GameObject bullet = Instantiate(PPD.bulletSpawner.bulletPrefab, PPD.bulletSpawner.bulletSpawnPointLeft.position, PPD.bulletSpawner.bulletSpawnPointLeft.rotation);
             bullet.GetComponent<Rigidbody2D>().velocity = -PPD.bulletSpawner.bulletSpawnPointLeft.right * PPD.bulletSpawner.bulletSpeed;
+            bullet.GetComponent<SpriteRenderer>().flipX = true;
         }
         else
         {
