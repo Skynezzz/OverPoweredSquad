@@ -1648,6 +1648,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 5.68
       objectReference: {fileID: 0}
+    - target: {fileID: 1249258175064038839, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: levelTime
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 2118005118797651045, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_Name
       value: PlayerWithCamera
@@ -1703,6 +1707,10 @@ PrefabInstance:
     - target: {fileID: 7636046298662225433, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287336263139272711, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8975707927734386214, guid: 58caced42ed23e94b981ba30b83e68ca, type: 3}
       propertyPath: m_LocalPosition.x

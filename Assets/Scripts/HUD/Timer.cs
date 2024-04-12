@@ -28,5 +28,6 @@ public class Timer : MonoBehaviour
         {
             gameLogic.lose = true;
         }
+        tmp.text = (int)remainingTime + " / " + (int)totalTime;
     }
 }
