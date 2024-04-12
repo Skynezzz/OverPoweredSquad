@@ -237,11 +237,13 @@ public class Movement : MonoBehaviour
             animator.SetFloat("Speed", 0f);
             animator.SetFloat("YSpeed", 1);
             animator.SetBool("IsGrounded", false);
+            animator.SetBool("IsWalled", false);
             return;
         }
         animator.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
         animator.SetFloat("YSpeed", rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", booleens["isGrounded"]);
+        animator.SetBool("IsWalled", booleens["isWalled"]);
     }
 
     private void MoveOn(Direction direction)
