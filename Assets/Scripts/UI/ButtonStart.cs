@@ -7,7 +7,7 @@ public class ButtonStart : MonoBehaviour
 {
     public void RunStart()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(2);
     }
     public void RunLevels()
     {
